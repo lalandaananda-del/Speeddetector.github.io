@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #fce4ec 0%, #e3f2fd 100%);
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
             padding: 20px;
             min-height: 100vh;
         }
@@ -25,23 +25,29 @@
         }
 
         .header {
+            background: linear-gradient(135deg, #ec407a 0%, #f06292 100%);
+            padding: 40px 40px;
+            border-radius: 25px;
             text-align: center;
             margin-bottom: 30px;
-            color: #4a5568;
+            box-shadow: 0 10px 40px rgba(236, 64, 122, 0.3);
         }
 
         .header h1 {
-            font-size: 2.5em;
-            background: linear-gradient(135deg, #ec407a 0%, #42a5f5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2em;
+            color: white;
             margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .header p {
-            color: #718096;
-            font-size: 1.1em;
+            color: white;
+            font-size: 1.05em;
+            font-weight: 400;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
         }
 
         .dashboard-grid {
@@ -57,21 +63,19 @@
             padding: 25px;
             box-shadow: 0 10px 30px rgba(236, 64, 122, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(66, 165, 245, 0.2);
+            box-shadow: 0 15px 40px rgba(236, 64, 122, 0.2);
         }
 
         .card-title {
             font-size: 1.3em;
             font-weight: 600;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #ec407a 0%, #42a5f5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #ec407a;
         }
 
         .gauge-container {
@@ -82,8 +86,8 @@
         }
 
         .gauge {
-            width: 280px;
-            height: 200px;
+            width: 100%;
+            height: 100%;
         }
 
         .gauge-value {
@@ -97,10 +101,7 @@
         .gauge-value .speed {
             font-size: 3em;
             font-weight: bold;
-            background: linear-gradient(135deg, #ec407a 0%, #42a5f5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #ec407a;
         }
 
         .gauge-value .unit {
@@ -117,7 +118,7 @@
         }
 
         .stat-box {
-            background: linear-gradient(135deg, #fce4ec 0%, #e3f2fd 100%);
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
             padding: 15px;
             border-radius: 12px;
             text-align: center;
@@ -150,7 +151,7 @@
         }
 
         th {
-            background: linear-gradient(135deg, #ec407a 0%, #42a5f5 100%);
+            background: #ec407a;
             color: white;
             padding: 12px;
             text-align: left;
@@ -186,6 +187,13 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        .last-update {
+            text-align: center;
+            color: #718096;
+            font-size: 0.9em;
+            margin-top: 20px;
         }
 
         .no-data-overlay {
@@ -245,13 +253,6 @@
             50% { opacity: 0.5; }
         }
 
-        .last-update {
-            text-align: center;
-            color: #718096;
-            font-size: 0.9em;
-            margin-top: 20px;
-        }
-
         @media (max-width: 768px) {
             .chart-card {
                 grid-column: span 1;
@@ -270,8 +271,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏎️ Dashboard Kecepatan Mobil</h1>
-            <p>Monitoring Real-Time dengan ThingSpeak</p>
+            <h1>Dashboard Kecepatan Mobil</h1>
+            <p>Berbasis ESP32 + IR Sensor - Monitoring Real-Time dengan ThingSpeak</p>
         </div>
 
         <div id="loading" class="loading">
@@ -283,9 +284,8 @@
             <div class="dashboard-grid">
                 <!-- Gauge Card -->
                 <div class="card" style="position: relative;">
-                    <div class="card-title">⚡ Kecepatan Saat Ini</div>
+                    <div class="card-title">Kecepatan Saat Ini</div>
                     <div id="gaugeNoData" class="no-data-overlay" style="display: none;">
-                        <div class="no-data-icon">📡</div>
                         <div class="no-data-text">Tidak Ada Data</div>
                         <div class="no-data-subtext">Menunggu data dari sensor...</div>
                     </div>
@@ -314,9 +314,8 @@
 
                 <!-- Chart Card -->
                 <div class="card chart-card" style="position: relative;">
-                    <div class="card-title">📈 Grafik Kecepatan (20 Data Terakhir)</div>
+                    <div class="card-title">Grafik Kecepatan (20 Data Terakhir)</div>
                     <div id="chartNoData" class="no-data-overlay" style="display: none;">
-                        <div class="no-data-icon">📊</div>
                         <div class="no-data-text">Tidak Ada Data</div>
                         <div class="no-data-subtext">Grafik akan muncul saat data masuk</div>
                     </div>
@@ -324,10 +323,9 @@
                 </div>
 
                 <!-- Table Card -->
-                <div class="card" style="grid-column: span 2; position: relative;">
-                    <div class="card-title">📋 Data Terbaru</div>
+                <div class="card" style="grid-column: 1 / -1; position: relative;">
+                    <div class="card-title">Data Terbaru</div>
                     <div id="tableNoData" class="no-data-overlay" style="display: none;">
-                        <div class="no-data-icon">📝</div>
                         <div class="no-data-text">Tidak Ada Data</div>
                         <div class="no-data-subtext">Tabel akan terisi saat data masuk</div>
                     </div>
@@ -361,10 +359,10 @@
     <script>
         // ThingSpeak Configuration
         const CHANNEL_ID = '3202381';
-        const READ_API_KEY = ''; // Kosongkan jika channel public
+        const READ_API_KEY = '';
         const FIELD = 'field1';
-        const RESULTS = 20; // Jumlah data yang diambil
-        const DATA_TIMEOUT = 5 * 60 * 1000; // 5 menit dalam milliseconds
+        const RESULTS = 20;
+        const DATA_TIMEOUT = 5 * 60 * 1000;
 
         let speedChart;
         let allData = [];
@@ -373,7 +371,7 @@
         // Initialize
         async function init() {
             await fetchData();
-            setInterval(fetchData, 15000); // Update every 15 seconds
+            setInterval(fetchData, 15000);
         }
 
         // Fetch data from ThingSpeak
@@ -395,7 +393,7 @@
             } catch (error) {
                 console.error('Error fetching data:', error);
                 document.getElementById('loading').innerHTML = 
-                    '<p style="color: #e53e3e;">❌ Gagal memuat data. Pastikan Channel ID benar dan channel bersifat public.</p>';
+                    '<p style="color: #e53e3e;">Gagal memuat data. Pastikan Channel ID benar dan channel bersifat public.</p>';
             }
         }
 
@@ -407,7 +405,7 @@
             const maxSpeed = Math.max(...speeds);
             const avgSpeed = speeds.reduce((a, b) => a + b, 0) / speeds.length;
 
-            // Check if data is recent (within 5 minutes)
+            // Check if data is recent
             const lastEntry = allData[allData.length - 1];
             const lastTime = new Date(lastEntry.created_at);
             const now = new Date();
@@ -418,7 +416,7 @@
             // Update data status indicator
             updateDataStatus(isDataActive, lastTime);
 
-            // Show/hide "No Data" overlays
+            // Show/hide overlays
             document.getElementById('gaugeNoData').style.display = isDataActive ? 'none' : 'flex';
             document.getElementById('chartNoData').style.display = isDataActive ? 'none' : 'flex';
             document.getElementById('tableNoData').style.display = isDataActive ? 'none' : 'flex';
@@ -439,14 +437,14 @@
                 // Update table
                 updateTable();
             } else {
-                // Reset display to 0 when no data
+                // Reset display
                 document.getElementById('currentSpeed').textContent = '0';
                 document.getElementById('minSpeed').textContent = '0';
                 document.getElementById('avgSpeed').textContent = '0';
                 document.getElementById('maxSpeed').textContent = '0';
             }
 
-            // Update last update time (always show)
+            // Update last update time
             document.getElementById('lastUpdate').textContent = lastTime.toLocaleString('id-ID');
         }
 
@@ -466,7 +464,6 @@
             const canvas = document.getElementById('gaugeCanvas');
             const ctx = canvas.getContext('2d');
             
-            // Set canvas size explicitly
             canvas.width = 280;
             canvas.height = 200;
             
@@ -477,41 +474,25 @@
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw background arc
+            // Background arc
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius, Math.PI, 2 * Math.PI);
             ctx.lineWidth = 20;
             ctx.strokeStyle = '#f0f0f0';
             ctx.stroke();
 
-            // Calculate angle based on speed (max 120 km/h)
+            // Calculate angle
             const maxGaugeSpeed = 120;
             const speedRatio = Math.min(speed / maxGaugeSpeed, 1);
             const angle = Math.PI + (speedRatio * Math.PI);
 
-            // Draw speed arc with gradient
-            const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-            gradient.addColorStop(0, '#ec407a');
-            gradient.addColorStop(1, '#42a5f5');
-
+            // Speed arc
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius, Math.PI, angle);
             ctx.lineWidth = 20;
-            ctx.strokeStyle = gradient;
+            ctx.strokeStyle = '#ec407a';
             ctx.lineCap = 'round';
             ctx.stroke();
-
-            // Draw speed markers
-            ctx.fillStyle = '#718096';
-            ctx.font = 'bold 12px Arial';
-            ctx.textAlign = 'center';
-            
-            for (let i = 0; i <= 120; i += 30) {
-                const markerAngle = Math.PI + (i / 120) * Math.PI;
-                const markerX = centerX + (radius - 30) * Math.cos(markerAngle);
-                const markerY = centerY + (radius - 30) * Math.sin(markerAngle);
-                ctx.fillText(i.toString(), markerX, markerY + 5);
-            }
         }
 
         // Update chart
@@ -575,4 +556,63 @@
                                 beginAtZero: true,
                                 grid: {
                                     color: '#e2e8f0'
- 
+                                },
+                                ticks: {
+                                    color: '#718096',
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    color: '#718096',
+                                    font: {
+                                        size: 11
+                                    },
+                                    maxRotation: 45,
+                                    minRotation: 45
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Update table
+        function updateTable() {
+            const tableBody = document.getElementById('dataTable');
+            tableBody.innerHTML = '';
+
+            const reversedData = [...allData].reverse();
+
+            reversedData.forEach((feed, index) => {
+                const speed = parseFloat(feed[FIELD]);
+                const date = new Date(feed.created_at);
+                const formattedDate = date.toLocaleString('id-ID');
+
+                let status = 'Normal';
+                if (speed > 80) status = 'Cepat';
+                else if (speed > 50) status = 'Sedang';
+
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${formattedDate}</td>
+                        <td><strong>${speed.toFixed(2)}</strong></td>
+                        <td>${status}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Start the app
+        init();
+    </script>
+</body>
+</html>
